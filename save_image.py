@@ -5,6 +5,31 @@ import numpy
 import os
 from PIL import Image, ExifTags
 from PIL.PngImagePlugin import PngInfo
+#========================================Mod=============================================
+from datetime import datetime
+
+
+def get_timestamp(time_format):
+    now = datetime.now()
+    try:
+        timestamp = now.strftime(time_format)
+    except:
+        timestamp = now.strftime("%Y-%m-%d %H-%M-%S")
+    return timestamp
+
+def make_pathname(filename):
+    filename = filename.replace("%date", get_timestamp("%Y-%m-%d"))
+    filename = filename.replace("%time", get_timestamp("%H-%M-%S"))
+    return filename
+#这里的变量得在后面得class输入里赋值，要不会报错
+
+def wildcards_to_string(wildcards):
+    if wildcards is None:
+        return ""
+    return wildcards.replace(" ", "&").replace(",", "&")
+#=====================================================================================
+
+
 
 class SaveImageExtended:
     def __init__(self):
@@ -26,16 +51,21 @@ class SaveImageExtended:
         return {
             "required": {
                 "images": ("IMAGE", ),
-                "filename_prefix": ("STRING", {"default": "ComfyUI"}),
-                "file_type": ([s.FILE_TYPE_PNG, s.FILE_TYPE_JPEG, s.FILE_TYPE_WEBP_LOSSLESS, s.FILE_TYPE_WEBP_LOSSY], ),
+                "filename_prefix": ("STRING", {"default": "%date %time"}),
+                "file_type": ([s.FILE_TYPE_PNG, s.FILE_TYPE_JPEG, s.FILE_TYPE_WEBP_LOSSLESS, s.FILE_TYPE_WEBP_LOSSY],  {"default": "JPEG"}),
+                "wildcards": ("STRING", {"default": ""}),
             },
             "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"},
         }
 
 
 
-    def save_images(self, images, filename_prefix="ComfyUI", file_type=FILE_TYPE_PNG, prompt=None, extra_pnginfo=None):
+    def save_images(self, images, wildcards, filename_prefix="ComfyUI", file_type=FILE_TYPE_PNG, prompt=None, extra_pnginfo=None):
         output_dir = folder_paths.get_output_directory()
+        #======================================================
+        filename_prefix = make_pathname(filename_prefix)
+        wildcards = wildcards_to_string(wildcards)
+        #======================================================
         full_output_folder, filename, counter, subfolder, _ = folder_paths.get_save_image_path(filename_prefix, output_dir, images[0].shape[1], images[0].shape[0])
         extension = {
             self.FILE_TYPE_PNG: "png",
@@ -76,7 +106,7 @@ class SaveImageExtended:
                     kwargs["exif"] = exif.tobytes()
 
 
-            file = f"{filename}_{counter:05}_.{extension}"
+            file = f"{filename}_{counter:05}_{wildcards}.{extension}"#==================
             img.save(os.path.join(full_output_folder, file), **kwargs)
             results.append({
                 "filename": file,
@@ -93,7 +123,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SaveImageExtended": "Save Image (Extended)"
+    "SaveImageExtended": "Save Image (Extended) ==Mod=="
 }
 
 WEB_DIRECTORY = "web"
