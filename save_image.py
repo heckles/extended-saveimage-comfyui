@@ -123,7 +123,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SaveImageExtended": "Save Image (Extended) ==Mod=="
+    "SaveImageExtended": "Save Image (Extended)(Mod)"
 }
 
 WEB_DIRECTORY = "web"
