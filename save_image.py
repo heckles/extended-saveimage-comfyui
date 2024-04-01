@@ -1,3 +1,6 @@
+#目前在保存comfyui生成的图片为jpg格式且带workflow信息的基础上，增加了文件名和路径中实现日期和时间通配符的功能
+#下一步试试保存prompt的文本，以及在comfyui中能够用插件读取并导出到工作流
+
 from comfy.cli_args import args
 import folder_paths
 import json
@@ -7,7 +10,6 @@ from PIL import Image, ExifTags
 from PIL.PngImagePlugin import PngInfo
 #========================================Mod=============================================
 from datetime import datetime
-#1511
 
 def get_timestamp(time_format):
     now = datetime.now()
