@@ -1,5 +1,5 @@
-#ç›®å‰åœ¨ä¿å­˜comfyuiç”Ÿæˆçš„å›¾ç‰‡ä¸ºjpgæ ¼å¼ä¸”å¸¦workflowä¿¡æ¯çš„åŸºç¡€ä¸Šï¼Œå¢åŠ äº†æ–‡ä»¶åå’Œè·¯å¾„ä¸­å®ç°æ—¥æœŸå’Œæ—¶é—´é€šé…ç¬¦çš„åŠŸèƒ½
-#ä¸‹ä¸€æ­¥è¯•è¯•ä¿å­˜promptçš„æ–‡æœ¬ï¼Œä»¥åŠåœ¨comfyuiä¸­èƒ½å¤Ÿç”¨æ’ä»¶è¯»å–å¹¶å¯¼å‡ºåˆ°å·¥ä½œæµ
+# Ä¿Ç°ÔÚ±£´æcomfyuiÉú³ÉµÄÍ¼Æ¬Îªjpg¸ñÊ½ÇÒ´øworkflowĞÅÏ¢µÄ»ù´¡ÉÏ£¬Ôö¼ÓÁËÎÄ¼şÃûºÍÂ·¾¶ÖĞÊµÏÖÈÕÆÚºÍÊ±¼äÍ¨Åä·ûµÄ¹¦ÄÜ
+# ÏÂÒ»²½ÊÔÊÔ±£´æpromptµÄÎÄ±¾£¬ÒÔ¼°ÔÚcomfyuiÖĞÄÜ¹»ÓÃ²å¼ş¶ÁÈ¡²¢µ¼³öµ½¹¤×÷Á÷
 
 from comfy.cli_args import args
 import folder_paths
@@ -8,8 +8,10 @@ import numpy
 import os
 from PIL import Image, ExifTags
 from PIL.PngImagePlugin import PngInfo
-#========================================Mod=============================================
+
+# ========================================Mod=============================================
 from datetime import datetime
+
 
 def get_timestamp(time_format):
     now = datetime.now()
@@ -19,24 +21,28 @@ def get_timestamp(time_format):
         timestamp = now.strftime("%Y-%m-%d %H-%M-%S")
     return timestamp
 
+
 def make_pathname(filename):
     filename = filename.replace("%date", get_timestamp("%Y-%m-%d"))
     filename = filename.replace("%time", get_timestamp("%H-%M-%S"))
     return filename
-#è¿™é‡Œçš„å˜é‡å¾—åœ¨åé¢å¾—classè¾“å…¥é‡Œèµ‹å€¼ï¼Œè¦ä¸ä¼šæŠ¥é”™
+
+
+# ÕâÀïµÄ±äÁ¿µÃÔÚºóÃæµÃclassÊäÈëÀï¸³Öµ£¬Òª²»»á±¨´í
+
 
 def wildcards_to_string(wildcards):
     if wildcards is None:
         return ""
     return wildcards.replace(" ", "&").replace(",", "&")
-#=====================================================================================
 
+
+# =====================================================================================
 
 
 class SaveImageExtended:
     def __init__(self):
         pass
-
 
     FILE_TYPE_PNG = "PNG"
     FILE_TYPE_JPEG = "JPEG"
@@ -47,28 +53,45 @@ class SaveImageExtended:
     OUTPUT_NODE = True
     CATEGORY = "image"
 
-
     @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
-                "images": ("IMAGE", ),
+                "images": ("IMAGE",),
                 "filename_prefix": ("STRING", {"default": "%date %time"}),
-                "file_type": ([s.FILE_TYPE_PNG, s.FILE_TYPE_JPEG, s.FILE_TYPE_WEBP_LOSSLESS, s.FILE_TYPE_WEBP_LOSSY],  {"default": "JPEG"}),
+                "file_type": (
+                    [
+                        s.FILE_TYPE_PNG,
+                        s.FILE_TYPE_JPEG,
+                        s.FILE_TYPE_WEBP_LOSSLESS,
+                        s.FILE_TYPE_WEBP_LOSSY,
+                    ],
+                    {"default": "JPEG"},
+                ),
                 "wildcards": ("STRING", {"default": ""}),
             },
             "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"},
         }
 
-
-
-    def save_images(self, images, wildcards, filename_prefix="ComfyUI", file_type=FILE_TYPE_PNG, prompt=None, extra_pnginfo=None):
+    def save_images(
+        self,
+        images,
+        wildcards,
+        filename_prefix="ComfyUI",
+        file_type=FILE_TYPE_PNG,
+        prompt=None,
+        extra_pnginfo=None,
+    ):
         output_dir = folder_paths.get_output_directory()
-        #======================================================
+        # ======================================================
         filename_prefix = make_pathname(filename_prefix)
         wildcards = wildcards_to_string(wildcards)
-        #======================================================
-        full_output_folder, filename, counter, subfolder, _ = folder_paths.get_save_image_path(filename_prefix, output_dir, images[0].shape[1], images[0].shape[0])
+        # ======================================================
+        full_output_folder, filename, counter, subfolder, _ = (
+            folder_paths.get_save_image_path(
+                filename_prefix, output_dir, images[0].shape[1], images[0].shape[0]
+            )
+        )
         extension = {
             self.FILE_TYPE_PNG: "png",
             self.FILE_TYPE_JPEG: "jpg",
@@ -78,7 +101,7 @@ class SaveImageExtended:
 
         results = []
         for image in images:
-            array = 255. * image.cpu().numpy()
+            array = 255.0 * image.cpu().numpy()
             img = Image.fromarray(numpy.clip(array, 0, 255).astype(numpy.uint8))
 
             kwargs = dict()
@@ -107,25 +130,24 @@ class SaveImageExtended:
                     exif[ExifTags.Base.UserComment] = json.dumps(metadata)
                     kwargs["exif"] = exif.tobytes()
 
-
-            file = f"{filename}_{counter:05}_{wildcards}.{extension}"#==================
+            file = (
+                f"{filename}_{counter:05}_{wildcards}.{extension}"  # ==================
+            )
             img.save(os.path.join(full_output_folder, file), **kwargs)
-            results.append({
-                "filename": file,
-                "subfolder": subfolder,
-                "type": "output",
-            })
+            results.append(
+                {
+                    "filename": file,
+                    "subfolder": subfolder,
+                    "type": "output",
+                }
+            )
             counter += 1
 
-        return { "ui": { "images": results } }
+        return {"ui": {"images": results}}
 
 
-NODE_CLASS_MAPPINGS = {
-    "SaveImageExtended": SaveImageExtended
-}
+NODE_CLASS_MAPPINGS = {"SaveImageExtended": SaveImageExtended}
 
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "SaveImageExtended": "Save Image (Extended)ã€Modã€‘"
-}
+NODE_DISPLAY_NAME_MAPPINGS = {"SaveImageExtended": "Save Image (Extended)¡¾Mod¡¿"}
 
 WEB_DIRECTORY = "web"
