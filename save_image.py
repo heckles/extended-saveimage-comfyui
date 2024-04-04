@@ -1,12 +1,10 @@
 # 目前在保存comfyui生成的图片为jpg格式且带workflow信息的基础上，增加了文件名和路径中实现日期和时间通配符的功能
 # 下一步试试保存prompt的文本，以及在comfyui中能够用插件读取并导出到工作流
-<<<<<<< HEAD
 
 
 # 有些customnodes会起冲突，比如
 # DynamicPrompts Custom Nodes from adieyal (如果生成png可以保留workflow信息，jpg就不行)
-=======
->>>>>>> 19bd4940a650c2a7821cfb95e1336b4b94f2d4ab
+
 
 from comfy.cli_args import args
 import folder_paths
