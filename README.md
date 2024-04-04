@@ -9,5 +9,5 @@ function added:   %date for date, %time for time
 To install, clone this repository into `ComfyUI/custom_nodes` folder with `git clone https://github.com/heckles/extended-saveimage-comfyui` and restart ComfyUI.
 
 
-# 有些customnodes会起冲突，比如
-# DynamicPrompts Custom Nodes from adieyal (如果生成png可以保留workflow信息，jpg就不行)
+## 有些customnodes会起冲突，比如
+DynamicPrompts Custom Nodes from adieyal (如果生成png可以保留workflow信息，jpg就不行)
