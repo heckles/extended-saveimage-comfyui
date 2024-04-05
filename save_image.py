@@ -1,9 +1,9 @@
-# Ä¿Ç°ÔÚ±£´æcomfyuiÉú³ÉµÄÍ¼Æ¬Îªjpg¸ñÊ½ÇÒ´øworkflowĞÅÏ¢µÄ»ù´¡ÉÏ£¬Ôö¼ÓÁËÎÄ¼şÃûºÍÂ·¾¶ÖĞÊµÏÖÈÕÆÚºÍÊ±¼äÍ¨Åä·ûµÄ¹¦ÄÜ
-# ÏÂÒ»²½ÊÔÊÔ±£´æpromptµÄÎÄ±¾£¬ÒÔ¼°ÔÚcomfyuiÖĞÄÜ¹»ÓÃ²å¼ş¶ÁÈ¡²¢µ¼³öµ½¹¤×÷Á÷
+# ç›®å‰åœ¨ä¿å­˜comfyuiç”Ÿæˆçš„å›¾ç‰‡ä¸ºjpgæ ¼å¼ä¸”å¸¦workflowä¿¡æ¯çš„åŸºç¡€ä¸Šï¼Œå¢åŠ äº†æ–‡ä»¶åå’Œè·¯å¾„ä¸­å®ç°æ—¥æœŸå’Œæ—¶é—´é€šé…ç¬¦çš„åŠŸèƒ½
+# ä¸‹ä¸€æ­¥è¯•è¯•ä¿å­˜promptçš„æ–‡æœ¬ï¼Œä»¥åŠåœ¨comfyuiä¸­èƒ½å¤Ÿç”¨æ’ä»¶è¯»å–å¹¶å¯¼å‡ºåˆ°å·¥ä½œæµ
 
 
-# ÓĞĞ©customnodes»áÆğ³åÍ»£¬±ÈÈç
-# DynamicPrompts Custom Nodes from adieyal (Èç¹ûÉú³Épng¿ÉÒÔ±£ÁôworkflowĞÅÏ¢£¬jpg¾Í²»ĞĞ)
+# æœ‰äº›customnodesä¼šèµ·å†²çªï¼Œæ¯”å¦‚
+# DynamicPrompts Custom Nodes from adieyal (å¦‚æœç”Ÿæˆpngå¯ä»¥ä¿ç•™workflowä¿¡æ¯ï¼Œjpgå°±ä¸è¡Œ)
 
 
 from comfy.cli_args import args
@@ -33,7 +33,7 @@ def make_pathname(filename):
     return filename
 
 
-# ÕâÀïµÄ±äÁ¿µÃÔÚºóÃæµÃclassÊäÈëÀï¸³Öµ£¬Òª²»»á±¨´í
+# è¿™é‡Œçš„å˜é‡å¾—åœ¨åé¢å¾—classè¾“å…¥é‡Œèµ‹å€¼ï¼Œè¦ä¸ä¼šæŠ¥é”™
 
 
 def wildcards_to_string(wildcards):
@@ -153,6 +153,6 @@ class SaveImageExtended:
 
 NODE_CLASS_MAPPINGS = {"SaveImageExtended": SaveImageExtended}
 
-NODE_DISPLAY_NAME_MAPPINGS = {"SaveImageExtended": "Save Image (Extended)¡¾Mod¡¿"}
+NODE_DISPLAY_NAME_MAPPINGS = {"SaveImageExtended": "Save Image (Extended)ã€Modã€‘"}
 
 WEB_DIRECTORY = "web"
