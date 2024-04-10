@@ -39,7 +39,8 @@ def make_pathname(filename):
 def wildcards_to_string(wildcards):
     if wildcards is None:
         return ""
-    return wildcards.replace(" ", "&").replace(",", "&")
+    return wildcards.replace(",", "&")  # 把多个wildercards用&连接起来
+    # return wildcards.replace(" ", "_").replace(",", "&")    .replace可以叠用
 
 
 # =====================================================================================
