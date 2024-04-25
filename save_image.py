@@ -1,5 +1,5 @@
 # 目前在保存comfyui生成的图片为jpg格式且带workflow信息的基础上，增加了文件名和路径中实现日期和时间通配符的功能
-# 下一步试试保存prompt的文本，以及在comfyui中能够用插件读取并导出到工作流
+# 下一步试试保存prompt的文本，以及在comfyui中能够用插件读取prompt的文本、并导出到工作流
 
 
 # 有些customnodes会起冲突，比如
