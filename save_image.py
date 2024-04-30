@@ -98,6 +98,7 @@ class SaveImageExtended:
                 filename_prefix, output_dir, images[0].shape[1], images[0].shape[0]
             )
         )
+        # 元组解包赋值
         extension = {
             self.FILE_TYPE_PNG: "png",
             self.FILE_TYPE_JPEG: "jpg",
