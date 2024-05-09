@@ -2,6 +2,7 @@
 # 下一步试试保存prompt的文本，以及在comfyui中能够用插件读取prompt的文本、并导出到工作流
 # 1
 # 2
+# 0509 15 53
 # 有些customnodes会起冲突，比如
 # DynamicPrompts Custom Nodes from adieyal (如果生成png可以保留workflow信息，jpg就不行)
 
