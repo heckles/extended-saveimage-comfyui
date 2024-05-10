@@ -4,6 +4,7 @@
 # 2
 # 0509 15 53
 # 2023-05-09 17:53:59.65858
+# 2024-05-10 0929
 # 有些customnodes会起冲突，比如
 # DynamicPrompts Custom Nodes from adieyal (如果生成png可以保留workflow信息，jpg就不行)
 
